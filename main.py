@@ -26,6 +26,13 @@ class CDKEYApp:
         self.notebook.add(self.verify_tab, text="CDK校验")
         self.notebook.add(self.about_tab, text="关于")
         
+        # 统一设置标签页宽度
+        for tab in [self.generate_tab, self.verify_tab, self.about_tab]:
+            tab.config(width=300)
+        
+        # 调整标签页间距
+        self.notebook.config(padding=(10, 5, 10, 5))
+        
         self.notebook.pack(fill=tk.BOTH, expand=True)
         
         # 初始化各页面
