@@ -100,7 +100,12 @@ class GenerateTab:
         # 弹出文件保存对话框
         file_path = filedialog.asksaveasfilename(
             defaultextension=".txt",
-            filetypes=[("文本文件", "*.txt"), ("所有文件", "*.*")],
+            filetypes=[
+                ("文本文件", "*.txt"),
+                ("Excel文件", "*.xlsx"),
+                ("Word文件", "*.docx"),
+                ("所有文件", "*.*")
+            ],
             title="保存CDKEY文件"
         )
         
@@ -108,8 +113,24 @@ class GenerateTab:
             return
             
         try:
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write('\n'.join(self.generated_cdkeys))
+            if file_path.endswith('.xlsx'):
+                from openpyxl import Workbook
+                wb = Workbook()
+                ws = wb.active
+                ws.title = "CDKEY列表"
+                for i, cdkey in enumerate(self.generated_cdkeys, 1):
+                    ws.cell(row=i, column=1, value=cdkey)
+                wb.save(file_path)
+            elif file_path.endswith('.docx'):
+                from docx import Document
+                doc = Document()
+                doc.add_heading('CDKEY列表', 0)
+                for cdkey in self.generated_cdkeys:
+                    doc.add_paragraph(cdkey)
+                doc.save(file_path)
+            else:
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(self.generated_cdkeys))
             messagebox.showinfo("成功", f"CDKEY已成功导出到 {file_path}")
         except Exception as e:
             messagebox.showerror("错误", f"导出失败: {str(e)}")
