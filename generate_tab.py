@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 import random
 import string
 
@@ -97,5 +97,19 @@ class GenerateTab:
             messagebox.showerror("错误", "请先生成CDKEY")
             return
         
-        # 这里可以添加导出到文件的逻辑
-        messagebox.showinfo("提示", "导出功能将在后续实现")
+        # 弹出文件保存对话框
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=[("文本文件", "*.txt"), ("所有文件", "*.*")],
+            title="保存CDKEY文件"
+        )
+        
+        if not file_path:  # 用户取消选择
+            return
+            
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(self.generated_cdkeys))
+            messagebox.showinfo("成功", f"CDKEY已成功导出到 {file_path}")
+        except Exception as e:
+            messagebox.showerror("错误", f"导出失败: {str(e)}")
