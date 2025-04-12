@@ -16,23 +16,23 @@ class AboutTab:
         # 从update.txt获取更新日期
         update_date = self.get_update_date()
         self.app_info = {
-            "version": "α 1.0",
+            "version": "α 1.1",
             "author": "JasonShane",
             "github": "https://github.com/xJasonShane/CDKEY",
             "update_date": update_date
         }
         
-        info_frame = ttk.Frame(self.about_frame, padding=10)
+        info_frame = ttk.Frame(self.about_frame, padding=(10, 10, 10, 10))
         info_frame.pack(padx=10, pady=10)
         
-        ttk.Label(info_frame, text=f"版本: {self.app_info['version']}").grid(row=0, column=0, sticky=tk.W, padx=10, pady=5)
-        ttk.Label(info_frame, text=f"作者: {self.app_info['author']}").grid(row=1, column=0, sticky=tk.W, padx=10, pady=5)
-        ttk.Label(info_frame, text="GitHub:").grid(row=2, column=0, sticky=tk.W, padx=10, pady=5)
+        ttk.Label(info_frame, text=f"版本: {self.app_info['version']}").grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
+        ttk.Label(info_frame, text=f"作者: {self.app_info['author']}").grid(row=1, column=0, sticky=tk.W, padx=10, pady=10)
+        ttk.Label(info_frame, text="GitHub:").grid(row=2, column=0, sticky=tk.W, padx=10, pady=10)
         github_link = ttk.Label(info_frame, text=self.app_info['github'], foreground="blue", cursor="hand2")
-        github_link.grid(row=2, column=1, sticky=tk.W, pady=5)
-        ttk.Label(info_frame, text="更新日期:").grid(row=3, column=0, sticky=tk.W, padx=10, pady=5)
+        github_link.grid(row=2, column=1, sticky=tk.W, pady=10)
+        ttk.Label(info_frame, text="更新日期:").grid(row=3, column=0, sticky=tk.W, padx=10, pady=10)
         update_link = ttk.Label(info_frame, text=self.app_info['update_date'], foreground="blue", cursor="hand2")
-        update_link.grid(row=3, column=1, sticky=tk.W, pady=5)
+        update_link.grid(row=3, column=1, sticky=tk.W, pady=10)
         update_link.bind("<Button-1>", lambda e: self.open_update_file())
         github_link.bind("<Button-1>", lambda e: self.open_github())
     
